@@ -1,5 +1,7 @@
 # react-in-angularjs
 
+A super simple way to render React components in AngularJS.
+
 ## Install
 `npm install react-in-angularjs`
 
