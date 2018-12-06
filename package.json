@@ -1,23 +1,12 @@
 {
   "name": "react-in-angularjs",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "author": "Joshua Prodahl",
   "license": "ISC",
-  "scripts": {
-    "build": "webpack --mode production"
-  },
   "dependencies": {
     "react": "16.6.3",
     "react-dom": "16.6.3"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.4",
-    "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
   }
 }
