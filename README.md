@@ -15,14 +15,14 @@ import angularize from "react-in-angularjs";
 
 export class TodoList extends React.PureComponent {
   render() {
-  	const {todos} = this.props;
-  	return (
-            <ol>
-              {todos.map(todo => (
-                <li>{todo.description}</li>
-              ))}
-            </ol>
-  	);
+    const {todos} = this.props;
+    return (
+      <ol>
+      {todos.map(todo => (
+        <li>{todo.description}</li>
+      ))}
+      </ol>
+    );
   }
 }
 
