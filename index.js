@@ -1,7 +1,9 @@
-import React from "react";
-import ReactDOM from "react-dom";
+const React = require("react");
+const ReactDOM = require("react-dom");
 
 const angularize = (Component, angularApp, bindings) => {
+	if (typeof window === "undefined" || typeof angularApp === "undefined") return;
+
 	const componentName = `${Component.name.charAt(0).toLowerCase()}${Component.name.slice(1)}`;
 	angularApp.component(componentName, {
 		bindings,
@@ -13,4 +15,4 @@ const angularize = (Component, angularApp, bindings) => {
 	})
 };
 
-export default angularize;
+module.exports = angularize;
