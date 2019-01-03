@@ -6,7 +6,9 @@ const angularize = (Component, angularApp, bindings) => {
 	angularApp.component(componentName, {
 		bindings,
 		controller: function ($element) {
-			ReactDOM.render(React.createElement(Component, this), $element[0]);
+			this.$onChanges = () => {
+				ReactDOM.render(React.createElement(Component, this), $element[0]);
+			};
 		}
 	})
 };
