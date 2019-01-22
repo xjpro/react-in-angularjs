@@ -9,7 +9,7 @@ const angularize = (Component, angularApp, bindings) => {
 	const componentName = `${Component.name.charAt(0).toLowerCase()}${Component.name.slice(1)}`;
 	angularApp.component(componentName, {
 		bindings,
-		controller: function ($rootScope, $element) {
+		controller: function ($element) {
 			for (let bindingKey in bindings) {
 				if (!gaveWarning && bindings.hasOwnProperty(bindingKey) && bindings[bindingKey] === "=") {
 					console.warn("react-in-angularjs: You are using two-way bindings. This is not recommended. You'll need to apply changes via this.props.$$scope.$apply.");
@@ -28,4 +28,9 @@ const angularize = (Component, angularApp, bindings) => {
 	})
 };
 
-module.exports = angularize;
+const getService = (serviceName) => window.angular.element(document.body).injector().get(serviceName);
+
+module.exports = {
+	getService,
+	angularize
+};
