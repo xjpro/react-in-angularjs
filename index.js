@@ -28,7 +28,10 @@ const angularize = (Component, angularApp, bindings) => {
 	})
 };
 
-const getService = (serviceName) => window.angular.element(document.body).injector().get(serviceName);
+const getService = (serviceName) => {
+	if (typeof window === "undefined" || typeof window.angular === "undefined") return {};
+	return window.angular.element(document.body).injector().get(serviceName);
+};
 
 module.exports = {
 	getService,
