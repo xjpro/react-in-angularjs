@@ -6,7 +6,7 @@ var gaveWarning = false;
 function angularize(Component, angularApp, bindings) {
 	if (typeof window === "undefined" || typeof angularApp === "undefined") return;
 
-	var componentName = `${Component.name.charAt(0).toLowerCase()}${Component.name.slice(1)}`;
+	var componentName = Component.name.charAt(0).toLowerCase() + Component.name.slice(1);
 	angularApp.component(componentName, {
 		bindings,
 		controller: function ($element) {
