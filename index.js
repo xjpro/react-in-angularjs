@@ -8,7 +8,7 @@ function angularize(Component, angularApp, bindings) {
 
 	var componentName = Component.name.charAt(0).toLowerCase() + Component.name.slice(1);
 	angularApp.component(componentName, {
-		bindings,
+		bindings: bindings,
 		controller: function ($element) {
 			for (var bindingKey in bindings) {
 				if (!gaveWarning && bindings.hasOwnProperty(bindingKey) && bindings[bindingKey] === "=") {
@@ -34,6 +34,6 @@ function getService(serviceName) {
 }
 
 module.exports = {
-	getService,
-	angularize
+	getService: getService,
+	angularize: angularize
 };
