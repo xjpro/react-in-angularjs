@@ -1,16 +1,16 @@
-const React = require("react");
-const ReactDOM = require("react-dom");
+var React = require("react");
+var ReactDOM = require("react-dom");
 
-let gaveWarning = false;
+var gaveWarning = false;
 
-const angularize = (Component, angularApp, bindings) => {
+function angularize(Component, angularApp, bindings) {
 	if (typeof window === "undefined" || typeof angularApp === "undefined") return;
 
-	const componentName = `${Component.name.charAt(0).toLowerCase()}${Component.name.slice(1)}`;
+	var componentName = `${Component.name.charAt(0).toLowerCase()}${Component.name.slice(1)}`;
 	angularApp.component(componentName, {
 		bindings,
 		controller: function ($element) {
-			for (let bindingKey in bindings) {
+			for (var bindingKey in bindings) {
 				if (!gaveWarning && bindings.hasOwnProperty(bindingKey) && bindings[bindingKey] === "=") {
 					console.warn("react-in-angularjs: You are using two-way bindings. This is not recommended. You'll need to apply changes via this.props.$$scope.$apply.");
 					gaveWarning = true;
@@ -21,17 +21,17 @@ const angularize = (Component, angularApp, bindings) => {
 				this.$$scope = window.angular.element($element).scope();
 			}
 
-			this.$onChanges = () => {
+			this.$onChanges = function () {
 				ReactDOM.render(React.createElement(Component, this), $element[0]);
 			};
 		}
 	})
-};
+}
 
-const getService = (serviceName) => {
+function getService(serviceName) {
 	if (typeof window === "undefined" || typeof window.angular === "undefined") return {};
 	return window.angular.element(document.body).injector().get(serviceName);
-};
+}
 
 module.exports = {
 	getService,
