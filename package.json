@@ -1,6 +1,6 @@
 {
   "name": "react-in-angularjs",
-  "version": "1.5.3",
+  "version": "16.8.6",
   "description": "",
   "main": "index.js",
   "author": "Joshua Prodahl",
@@ -8,8 +8,8 @@
     "build": "babel src -d ./"
   },
   "dependencies": {
-    "react": "16.6.3",
-    "react-dom": "16.6.3"
+    "react": "16.8.6",
+    "react-dom": "16.8.6"
   },
   "devDependencies": {
     "@babel/cli": "7.2.3",
