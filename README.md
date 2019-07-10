@@ -17,20 +17,19 @@ Feel free to do so. Otherwise:
 import React from "react";
 import {angularize} from "react-in-angularjs";
 
-export default class TodoList extends React.Component {
-  render() {
-    const {todos} = this.props;
-    return (
-      <ol>
+const TodoList = ({todos}) =>  {
+  return (
+    <ol>
       {todos.map(todo => (
         <li>{todo.description}</li>
       ))}
-      </ol>
-    );
-  }
+    </ol>
+  );
 }
 
-angularize(TodoList, angular.module("app"), {
+// this also works just as well with class components
+
+angularize(TodoList, "todoList", angular.module("app"), {
   todos: "<"	
 });
 
@@ -54,8 +53,8 @@ window.angular.module("myApp").service("todoService", () => {
   // Some very lovingly crafted service code
 });
 
-import {getAngularService} from "react-in-angularjs"
-const todoService = getAngularService("todoService");
+import {getService} from "react-in-angularjs"
+const todoService = getService("todoService");
 // Now you've got the singleton instance of it
 ```
 
@@ -70,15 +69,30 @@ your React components as well as used in legacy AngularJS (assuming they are als
 ### Two Way Bindings
 
 Two way bindings are not recommended, either by the AngularJS team or by me. However, it's not always possible to
-remove them in a legacy application. In those cases, you will need to apply any changes like this:
+remove them in a legacy application. In those cases, you can apply changes in two ways:
 
+##### Use $timeout
 ```js
-export class TodoItem {
+const TodoItem = ({todo}) => {
+	// imagine some React component with a change handler
+  const onChange = () => {
+  	// get Angular's $timeout wrapper using getService
+  	const $timeout = getService("$timeout"); 
+  	$timeout(() => {
+  	  todo.value = "new value"
+  	});
+  }	
+}
+```
+
+##### Use $scope
+```js
+const TodoItem = ({todo, $scope}) => {
   // imagine some React component with a change handler
-  onChange = () => {
-    this.props.$$scope.$apply(() => {
-      // $$scope = AngularJS component scope, provided on a prop via react-in-angularjs
-      this.props.twoWayBoundProperty = "new value"
+  const onChange = () => {
+    $scope.$apply(() => {
+      // $scope = AngularJS component scope, provided on a prop via react-in-angularjs
+      todo.value = "new value"
     });
   };
 }
