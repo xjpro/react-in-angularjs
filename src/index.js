@@ -8,7 +8,7 @@ const angularize = (Component, componentName, angularApp, bindings) => {
 
 	angularApp.component(componentName, {
 		bindings,
-		controller: function ($element) {
+		controller: ["$element", function ($element) {
 			for (let bindingKey in bindings) {
 				if (!gaveWarning && bindings.hasOwnProperty(bindingKey) && bindings[bindingKey] === "=") {
 					console.warn("react-in-angularjs: You are using two-way bindings. This is not recommended. You'll need to apply changes via this.props.$scope.$apply.");
@@ -23,7 +23,7 @@ const angularize = (Component, componentName, angularApp, bindings) => {
 			this.$onChanges = () => {
 				ReactDOM.render(React.createElement(Component, this), $element[0]);
 			};
-		}
+		}]
 	})
 };
 
