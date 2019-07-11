@@ -10,7 +10,7 @@ var angularize = function angularize(Component, componentName, angularApp, bindi
   if (typeof window === "undefined" || typeof angularApp === "undefined") return;
   angularApp.component(componentName, {
     bindings: bindings,
-    controller: function controller($element) {
+    controller: ["$element", function ($element) {
       var _this = this;
 
       for (var bindingKey in bindings) {
@@ -27,7 +27,7 @@ var angularize = function angularize(Component, componentName, angularApp, bindi
       this.$onChanges = function () {
         ReactDOM.render(React.createElement(Component, _this), $element[0]);
       };
-    }
+    }]
   });
 };
 
