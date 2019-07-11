@@ -58,6 +58,24 @@ const todoService = getService("todoService");
 // Now you've got the singleton instance of it
 ```
 
+## Building
+
+Since you likely don't have a normal React entry point, you'll need to leverage webpack's 
+ability to have multiple entry points. I accomplish this in my own project using `glob`:
+
+```js
+const glob = require("glob");
+const path = require("path");
+
+module.exports = {
+  entry: glob.sync("./app/**/!(*.test).jsx"),
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "dist") 
+  }
+};
+```
+
 ## Caveats
 
 ### AngularJS within React
@@ -74,13 +92,13 @@ remove them in a legacy application. In those cases, you can apply changes in tw
 ##### Use $timeout
 ```js
 const TodoItem = ({todo}) => {
-	// imagine some React component with a change handler
+  // imagine some React component with a change handler
   const onChange = () => {
-  	// get Angular's $timeout wrapper using getService
-  	const $timeout = getService("$timeout"); 
-  	$timeout(() => {
-  	  todo.value = "new value"
-  	});
+    // get Angular's $timeout wrapper using getService
+    const $timeout = getService("$timeout"); 
+    $timeout(() => {
+      todo.value = "new value"
+    });
   }	
 }
 ```
