@@ -11,7 +11,7 @@ const angularize = (Component, componentName, angularApp, bindings) => {
 		controller: ["$element", function ($element) {
 			for (let bindingKey in bindings) {
 				if (!gaveWarning && bindings.hasOwnProperty(bindingKey) && bindings[bindingKey] === "=") {
-					console.warn("react-in-angularjs: You are using two-way bindings. This is not recommended. You'll need to apply changes via this.props.$scope.$apply.");
+					console.warn("react-in-angularjs: You are using two-way bindings. This is not recommended. You'll need to apply changes via props $scope.$apply or $timeout");
 					gaveWarning = true;
 				}
 			}
