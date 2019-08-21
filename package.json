@@ -1,15 +1,15 @@
 {
   "name": "react-in-angularjs",
-  "version": "16.8.6-3",
+  "version": "16.8.6-4",
   "description": "A super simple way to render React components in AngularJS",
   "main": "index.js",
   "author": "Joshua Prodahl",
   "scripts": {
     "build": "babel src -d ./"
   },
-  "dependencies": {
-    "react": "16.8.6",
-    "react-dom": "16.8.6"
+  "peerDependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.5.0",
