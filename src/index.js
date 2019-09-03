@@ -1,21 +1,12 @@
 const React = require("react");
 const ReactDOM = require("react-dom");
 
-let gaveWarning = false;
-
 const angularize = (Component, componentName, angularApp, bindings) => {
 	if (typeof window === "undefined" || typeof angularApp === "undefined") return;
 
 	angularApp.component(componentName, {
 		bindings,
 		controller: ["$element", function ($element) {
-			for (let bindingKey in bindings) {
-				if (!gaveWarning && bindings.hasOwnProperty(bindingKey) && bindings[bindingKey] === "=") {
-					console.warn("react-in-angularjs: You are using two-way bindings. This is not recommended. You'll need to apply changes via props $scope.$apply or $timeout");
-					gaveWarning = true;
-				}
-			}
-
 			if (window.angular) {
 				this.$scope = window.angular.element($element).scope();
 			}
