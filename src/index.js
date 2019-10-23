@@ -2,6 +2,7 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 
 const angularize = (Component, componentName, angularApp, bindings) => {
+	bindings = bindings || {};
 	if (typeof window === "undefined" || typeof angularApp === "undefined") return;
 
 	angularApp.component(componentName, {
