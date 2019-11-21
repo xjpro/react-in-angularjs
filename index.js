@@ -49,6 +49,37 @@ var angularize = function angularize(Component, componentName, angularApp, bindi
   });
 };
 
+var angularizeDirective = function angularizeDirective(Component, directiveName, angularApp, bindings) {
+  bindings = bindings || {};
+  if (typeof window === "undefined" || typeof angularApp === "undefined") return;
+  angularApp.directive(directiveName, function () {
+    return {
+      scope: bindings,
+      replace: true,
+      link: function link(scope, element) {
+        // Add $scope
+        scope.$scope = scope; // First render - needed?
+
+        ReactDOM.render(React.createElement(Component, scope), element[0]); // Watch for any changes in bindings, then rerender
+
+        var keys = [];
+
+        for (var _i3 = 0, _Object$keys3 = Object.keys(bindings); _i3 < _Object$keys3.length; _i3++) {
+          var bindingKey = _Object$keys3[_i3];
+
+          if (bindings[bindingKey] !== "&") {
+            keys.push(bindingKey);
+          }
+        }
+
+        scope.$watchGroup(keys, function () {
+          ReactDOM.render(React.createElement(Component, scope), element[0]);
+        });
+      }
+    };
+  });
+};
+
 var getService = function getService(serviceName) {
   if (typeof window === "undefined" || typeof window.angular === "undefined") return {};
   return window.angular.element(document.body).injector().get(serviceName);
@@ -56,5 +87,6 @@ var getService = function getService(serviceName) {
 
 module.exports = {
   getService: getService,
-  angularize: angularize
+  angularize: angularize,
+  angularizeDirective: angularizeDirective
 };
