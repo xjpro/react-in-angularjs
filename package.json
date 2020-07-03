@@ -1,6 +1,6 @@
 {
   "name": "react-in-angularjs",
-  "version": "17.3.0",
+  "version": "17.3.1",
   "description": "A super simple way to render React components in AngularJS",
   "main": "index.js",
   "author": "Joshua Prodahl",
