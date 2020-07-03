@@ -10,5 +10,6 @@
       }
     ]
   ],
-  "comments": false
+  "comments": false,
+  "minified": true
 }
