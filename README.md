@@ -81,6 +81,45 @@ const todoService = getService("todoService");
 
 This can also be used to fetch built-in AngularJS services like $timeout, $http, etc.
 
+## Directives
+
+Sometimes you really need the resulting component to be a directive, typically
+when doing tables. For those situations, do this:
+
+```js
+import React from "react";
+import {angularizeDirective} from "react-in-angularjs";
+
+const SpecialTableHeader = ({data}) =>  {
+  const sort = () => {
+    // Very special sort logic
+  } 
+
+  return (  
+    <thead>
+      <tr>
+        <th onClick={sort}>Something</th>
+      </tr>
+    </thead>
+  );
+};
+
+angularizeDirective(SpecialTableHeader, "specialTableHeader", angular.module("app"), {
+  data: "<"	
+});
+```
+
+```html
+<table>
+    <thead special-table-header data="data"></thead>
+    <tbody>
+    ...etc.
+</table>
+```
+
+By default this uses `replace: true` so your HTML stays intact with no wrapping
+tag.
+
 ## Caveats
 
 ### AngularJS within React
