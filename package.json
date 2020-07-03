@@ -4,7 +4,8 @@
   "description": "A super simple way to render React components in AngularJS",
   "main": "index.js",
   "author": "Joshua Prodahl",
-  "repository": "xjpro/react-in-angularjs",
+  "homepage": "https://github.com/xjpro/react-in-angularjs",
+  "repository": "github:xjpro/react-in-angularjs",
   "scripts": {
     "build": "babel src -d ./"
   },
