@@ -1,7 +1,9 @@
 const React = require("react");
 const ReactDOM = require("react-dom");
+const isPlainObject = require("lodash/isPlainObject");
+const isEqual = require("lodash/isEqual");
 
-const angularize = (Component, componentName, angularApp, bindings) => {
+function angularize(Component, componentName, angularApp, bindings) {
 	bindings = bindings || {};
 	if (typeof window === "undefined" || typeof angularApp === "undefined") return;
 
@@ -25,7 +27,7 @@ const angularize = (Component, componentName, angularApp, bindings) => {
 
 				this.$doCheck = () => {
 					for (let previousKey of Object.keys(previous)) {
-						if (!window.angular.equals(this[previousKey], previous[previousKey])) {
+						if (!equals(this[previousKey], previous[previousKey])) {
 							this.$onChanges();
 							return;
 						}
@@ -38,9 +40,9 @@ const angularize = (Component, componentName, angularApp, bindings) => {
 			};
 		}]
 	})
-};
+}
 
-const angularizeDirective = (Component, directiveName, angularApp, bindings) => {
+function angularizeDirective(Component, directiveName, angularApp, bindings) {
 	bindings = bindings || {};
 	if (typeof window === "undefined" || typeof angularApp === "undefined") return;
 
@@ -69,12 +71,20 @@ const angularizeDirective = (Component, directiveName, angularApp, bindings) => 
 			}
 		}
 	});
-};
+}
 
-const getService = serviceName => {
+function getService(serviceName) {
 	if (typeof window === "undefined" || typeof window.angular === "undefined") return {};
 	return window.angular.element(document.body).injector().get(serviceName);
-};
+}
+
+function equals(o1, o2) {
+	// Compare plain objects without equality check that angular.equals does
+	if (isPlainObject(o1) && isPlainObject(o2)) {
+		return isEqual(o1, o2);
+	}
+	return window.angular.equals(o1, o2)
+}
 
 module.exports = {
 	getService,

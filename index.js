@@ -4,7 +4,11 @@ var React = require("react");
 
 var ReactDOM = require("react-dom");
 
-var angularize = function angularize(Component, componentName, angularApp, bindings) {
+var isPlainObject = require("lodash/isPlainObject");
+
+var isEqual = require("lodash/isEqual");
+
+function angularize(Component, componentName, angularApp, bindings) {
   bindings = bindings || {};
   if (typeof window === "undefined" || typeof angularApp === "undefined") return;
   angularApp.component(componentName, {
@@ -13,10 +17,7 @@ var angularize = function angularize(Component, componentName, angularApp, bindi
       var _this = this;
 
       if (window.angular) {
-        // Add $scope
-        this.$scope = window.angular.element($element).scope(); // Create a map of objects bound by '='
-        // For those that exists, use $doCheck to check them using angular.equals and trigger $onChanges
-
+        this.$scope = window.angular.element($element).scope();
         var previous = {};
 
         this.$onInit = function () {
@@ -33,7 +34,7 @@ var angularize = function angularize(Component, componentName, angularApp, bindi
           for (var _i2 = 0, _Object$keys2 = Object.keys(previous); _i2 < _Object$keys2.length; _i2++) {
             var previousKey = _Object$keys2[_i2];
 
-            if (!window.angular.equals(_this[previousKey], previous[previousKey])) {
+            if (!equals(_this[previousKey], previous[previousKey])) {
               _this.$onChanges();
 
               return;
@@ -47,9 +48,9 @@ var angularize = function angularize(Component, componentName, angularApp, bindi
       };
     }]
   });
-};
+}
 
-var angularizeDirective = function angularizeDirective(Component, directiveName, angularApp, bindings) {
+function angularizeDirective(Component, directiveName, angularApp, bindings) {
   bindings = bindings || {};
   if (typeof window === "undefined" || typeof angularApp === "undefined") return;
   angularApp.directive(directiveName, function () {
@@ -57,11 +58,8 @@ var angularizeDirective = function angularizeDirective(Component, directiveName,
       scope: bindings,
       replace: true,
       link: function link(scope, element) {
-        // Add $scope
-        scope.$scope = scope; // First render - needed?
-
-        ReactDOM.render(React.createElement(Component, scope), element[0]); // Watch for any changes in bindings, then rerender
-
+        scope.$scope = scope;
+        ReactDOM.render(React.createElement(Component, scope), element[0]);
         var keys = [];
 
         for (var _i3 = 0, _Object$keys3 = Object.keys(bindings); _i3 < _Object$keys3.length; _i3++) {
@@ -78,12 +76,20 @@ var angularizeDirective = function angularizeDirective(Component, directiveName,
       }
     };
   });
-};
+}
 
-var getService = function getService(serviceName) {
+function getService(serviceName) {
   if (typeof window === "undefined" || typeof window.angular === "undefined") return {};
   return window.angular.element(document.body).injector().get(serviceName);
-};
+}
+
+function equals(o1, o2) {
+  if (isPlainObject(o1) && isPlainObject(o2)) {
+    return isEqual(o1, o2);
+  }
+
+  return window.angular.equals(o1, o2);
+}
 
 module.exports = {
   getService: getService,
