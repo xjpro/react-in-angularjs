@@ -42,7 +42,7 @@ export default TodoList;
 TodoList React component now wrapped in an AngularJS component named "todoList". Sometime later in your app...
 
 ```html
-<todo-list todos="{{todos}}"></todo-list>
+<todo-list todos="todos"></todo-list>
 ```
 
 ## Building
@@ -118,7 +118,7 @@ const TodoItem = ({todo, $scope}) => {
   // imagine some React component with a change handler
   const onChange = () => {
     $scope.$apply(() => {
-      // $scope = AngularJS component scope, provided on a prop via react-in-angularjs
+      // $scope = AngularJS component scope, provided on a prop
       todo.value = "new value"
     });
   };
