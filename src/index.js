@@ -29,6 +29,7 @@ function angularize(Component, componentName, angularApp, bindings) {
 					for (let previousKey of Object.keys(previous)) {
 						if (!equals(this[previousKey], previous[previousKey])) {
 							this.$onChanges();
+							previous[previousKey] = window.angular.copy(this[previousKey]);
 							return;
 						}
 					}
