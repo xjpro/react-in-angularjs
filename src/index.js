@@ -65,9 +65,10 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
 						keys.push(bindingKey);
 					}
 				}
-
-				scope.$watchGroup(keys, () => {
-					ReactDOM.render(React.createElement(Component, scope), element[0]);
+				keys.forEach(prop => {
+					scope.$watch(prop, () => {
+						ReactDOM.render(React.createElement(Component, scope), element[0])
+					}, true)
 				});
 			}
 		}
