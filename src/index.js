@@ -19,6 +19,10 @@ function angularize(Component, componentName, angularApp, bindings) {
 				const previous = {};
 				this.$onInit = () => {
 					for (let bindingKey of Object.keys(bindings)) {
+						if(/^data[A-Z]/.test(bindingKey)) {
+							console.warn(`'${bindingKey}' binding for ${componentName} component will be undefined because AngularJS ignores attributes starting with data-`);
+						}
+
 						if (bindings[bindingKey] === "=") {
 							previous[bindingKey] = window.angular.copy(this[bindingKey]);
 						}
@@ -61,6 +65,9 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
 				// Watch for any changes in bindings, then rerender
 				const keys = [];
 				for (let bindingKey of Object.keys(bindings)) {
+					if(/^data[A-Z]/.test(bindingKey)) {
+						console.warn(`'${bindingKey}' binding for ${directiveName} directive will be undefined because AngularJS ignores attributes starting with data-`);
+					}
 					if (bindings[bindingKey] !== "&") {
 						keys.push(bindingKey);
 					}
