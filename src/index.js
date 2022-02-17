@@ -1,8 +1,8 @@
-const React = require("react");
-const ReactDOM = require("react-dom");
-const isPlainObject = require("lodash/isPlainObject");
-const isEqual = require("lodash/isEqual");
-const isEmpty = require("lodash/isEmpty");
+import React from "react";
+import ReactDOM from "react-dom";
+import isPlainObject from "lodash/isPlainObject";
+import isEqual from "lodash/isEqual";
+import ReactHtmlParser from "react-html-parser";
 
 function angularize(Component, componentName, angularApp, bindings) {
   bindings = bindings || {};
@@ -47,9 +47,7 @@ function angularize(Component, componentName, angularApp, bindings) {
         }
 
         this.$onChanges = () => {
-          const children = Array.from($element[0].children || []).map((child) =>
-            recursivelyCreateElement(child)
-          );
+          const children = ReactHtmlParser($element[0].innerHTML);
           ReactDOM.render(
             React.createElement(Component, this, ...children),
             $element[0]
@@ -109,13 +107,6 @@ function equals(o1, o2) {
     return isEqual(o1, o2);
   }
   return window.angular.equals(o1, o2);
-}
-
-function recursivelyCreateElement(el) {
-  const children = !isEmpty(el.children)
-    ? Array.from(el.children).map((child) => recursivelyCreateElement(child))
-    : el.textContent;
-  return React.createElement(`${el.tagName}`.toLowerCase(), {}, ...children);
 }
 
 module.exports = {
