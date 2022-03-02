@@ -1,8 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import isPlainObject from "lodash/isPlainObject";
-import isEqual from "lodash/isEqual";
-import ReactHtmlParser from "react-html-parser";
+const React = require("react");
+const ReactDOM = require("react-dom");
+const isPlainObject = require("lodash/isPlainObject");
+const isEqual = require("lodash/isEqual");
 
 function angularize(Component, componentName, angularApp, bindings) {
   bindings = bindings || {};
@@ -47,11 +46,7 @@ function angularize(Component, componentName, angularApp, bindings) {
         }
 
         this.$onChanges = () => {
-          const children = ReactHtmlParser($element[0].innerHTML);
-          ReactDOM.render(
-            React.createElement(Component, this, ...children),
-            $element[0]
-          );
+          ReactDOM.render(React.createElement(Component, this), $element[0]);
         };
       },
     ],
