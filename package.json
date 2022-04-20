@@ -1,6 +1,6 @@
 {
-  "name": "react-in-angularjs",
-  "version": "17.7.0",
+  "name": "icp-react-in-angularjs",
+  "version": "18.0.0",
   "description": "A super simple way to render React components in AngularJS",
   "main": "index.js",
   "author": "Joshua Prodahl",
@@ -13,8 +13,8 @@
     "lodash": ">=1.0.0"
   },
   "peerDependencies": {
-    "react": ">=16.0.0",
-    "react-dom": ">=16.0.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "devDependencies": {
     "@babel/cli": "7.17.0",

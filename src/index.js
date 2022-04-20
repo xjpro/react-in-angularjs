@@ -1,5 +1,6 @@
 const React = require("react");
-const ReactDOM = require("react-dom");
+const ReactDOMClient = require("react-dom/client");
+
 const isPlainObject = require("lodash/isPlainObject");
 const isEqual = require("lodash/isEqual");
 
@@ -13,6 +14,9 @@ function angularize(Component, componentName, angularApp, bindings) {
     controller: [
       "$element",
       function ($element) {
+        // Create react root for this element
+        this.root = ReactDOMClient.createRoot($element[0]);
+
         if (window.angular) {
           // Add $scope
           this.$scope = window.angular.element($element).scope();
@@ -46,7 +50,7 @@ function angularize(Component, componentName, angularApp, bindings) {
         }
 
         this.$onChanges = () => {
-          ReactDOM.render(React.createElement(Component, this), $element[0]);
+          this.root.render(React.createElement(Component, this));
         };
       },
     ],
@@ -67,7 +71,8 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
         scope.$scope = scope;
 
         // First render - needed?
-        ReactDOM.render(React.createElement(Component, scope), element[0]);
+        const root = ReactDOMClient.createRoot($element[0]);
+        root.render(React.createElement(Component, scope));
 
         // Watch for any changes in bindings, then rerender
         const keys = [];
@@ -82,8 +87,8 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
           }
         }
 
-        scope.$watchGroup(keys, () => {
-          ReactDOM.render(React.createElement(Component, scope), element[0]);
+        scope.$watchGroup(keys, (root) => {
+          root.render(React.createElement(Component, scope));
         });
       },
     };
