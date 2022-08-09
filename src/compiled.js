@@ -5,7 +5,7 @@ this.$onChanges = () => {
 	const element = $element[0];
 
 	// Render in React
-	ReactDOM.render(React.createElement(Component, this), element);
+    ReactDOM.createRoot(element[0]).render(React.createElement(Component, this));
 
 	// If the angularized React component created HTML, run that child HTML through $compile
 	// to hook up any AngularJS components within

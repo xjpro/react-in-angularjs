@@ -1,5 +1,5 @@
 const React = require("react");
-const ReactDOM = require("react-dom");
+const ReactDOM = require("react-dom/client");
 const isPlainObject = require("lodash/isPlainObject");
 const isEqual = require("lodash/isEqual");
 
@@ -46,7 +46,7 @@ function angularize(Component, componentName, angularApp, bindings) {
         }
 
         this.$onChanges = () => {
-          ReactDOM.render(React.createElement(Component, this), $element[0]);
+          ReactDOM.createRoot($element[0]).render(React.createElement(Component, this));
         };
       },
     ],
@@ -67,7 +67,7 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
         scope.$scope = scope;
 
         // First render - needed?
-        ReactDOM.render(React.createElement(Component, scope), element[0]);
+        ReactDOM.createRoot(element[0]).render(React.createElement(Component, scope));
 
         // Watch for any changes in bindings, then rerender
         const keys = [];
@@ -83,7 +83,7 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
         }
 
         scope.$watchGroup(keys, () => {
-          ReactDOM.render(React.createElement(Component, scope), element[0]);
+          ReactDOM.createRoot(element[0]).render(React.createElement(Component, scope));
         });
       },
     };
