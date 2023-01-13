@@ -48,6 +48,10 @@ function angularize(Component, componentName, angularApp, bindings) {
         this.$onChanges = () => {
           ReactDOM.render(React.createElement(Component, this), $element[0]);
         };
+        
+        this.$onDestroy = () => {
+          ReactDOM.unmountComponentAtNode($element[0]);
+        };
       },
     ],
   });
@@ -84,6 +88,10 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
 
         scope.$watchGroup(keys, () => {
           ReactDOM.render(React.createElement(Component, scope), element[0]);
+        });
+        
+        scope.$on('$destroy', function() {
+          ReactDOM.unmountComponentAtNode($element[0]);
         });
       },
     };
