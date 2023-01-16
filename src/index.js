@@ -1,5 +1,6 @@
 const React = require("react");
 const ReactDOMClient = require("react-dom/client");
+
 const isPlainObject = require("lodash/isPlainObject");
 const isEqual = require("lodash/isEqual");
 
@@ -50,7 +51,6 @@ function angularize(Component, componentName, angularApp, bindings) {
 
         this.$onChanges = () => {
           this.root.render(React.createElement(Component, this));
-        };
 
         this.$onDestroy = () => {
           this.root.unmount();
@@ -90,7 +90,7 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
           }
         }
 
-        scope.$watchGroup(keys, () => {
+        scope.$watchGroup(keys, (root) => {
           root.render(React.createElement(Component, scope));
         });
 
