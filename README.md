@@ -3,6 +3,12 @@
 A super simple way to render React components in AngularJS. This was written with the goal of
 facilitating conversion of an AngularJS app without doing a full rewrite. 
 
+## Versions
+
+Support for React 18 started in `react-in-angularjs@18`
+
+Support for versions 16 or less use `react-in-angularjs@17.7.1`
+
 ## Install
 The function contained in this library is small enough that you might just want to copy paste it. 
 Feel free to do so. Otherwise:

@@ -51,6 +51,7 @@ function angularize(Component, componentName, angularApp, bindings) {
 
         this.$onChanges = () => {
           this.root.render(React.createElement(Component, this));
+        };
 
         this.$onDestroy = () => {
           this.root.unmount();
