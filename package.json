@@ -2,6 +2,7 @@
   "name": "react-in-angularjs",
   "version": "18.0.0",
   "description": "A super simple way to render React components in AngularJS",
+  "type": "commonjs",
   "main": "index.js",
   "author": "Joshua Prodahl",
   "homepage": "https://github.com/xjpro/react-in-angularjs",
@@ -20,6 +21,8 @@
     "@babel/cli": "7.20.7",
     "@babel/core": "7.20.12",
     "@babel/preset-env": "7.20.2",
-    "prettier": "2.8.2"
+    "@types/angular": "^1.8.4",
+    "prettier": "2.8.2",
+    "typescript": "^4.9.5"
   }
 }

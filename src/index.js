@@ -70,7 +70,7 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
     return {
       scope: bindings,
       replace: true,
-      link: function (scope, element) {
+      link: function (scope, $element) {
         // Add $scope
         scope.$scope = scope;
         const root = ReactDOMClient.createRoot($element[0]);
