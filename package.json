@@ -2,14 +2,25 @@
   "name": "react-in-angularjs",
   "version": "18.0.0",
   "description": "A super simple way to render React components in AngularJS",
-  "type": "commonjs",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "type": "module",
+  "main": "src/index.cjs",
+  "types": "src/index.d.ts",
   "author": "Joshua Prodahl",
   "homepage": "https://github.com/xjpro/react-in-angularjs",
   "repository": "github:xjpro/react-in-angularjs",
+  "files": [
+    "src",
+    "index.d.ts"
+  ],
+  "exports": {
+    ".": {
+      "import": "./src/index.mjs",
+      "require": "./src/index.cjs",
+      "types": "./src/index.d.ts"
+    }
+  },
   "scripts": {
-    "build": "babel src/index.js -d ./"
+    "build": "babel src/index.mjs -d ./src --out-file-extension .cjs --source-maps"
   },
   "dependencies": {
     "lodash": ">=1.0.0"

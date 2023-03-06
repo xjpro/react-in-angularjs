@@ -1,10 +1,16 @@
-const React = require("react");
-const ReactDOMClient = require("react-dom/client");
+import React from "react";
+import ReactDOMClient from "react-dom/client";
 
-const isPlainObject = require("lodash/isPlainObject");
-const isEqual = require("lodash/isEqual");
+import { isPlainObject, isEqual } from "lodash";
 
-function angularize(Component, componentName, angularApp, bindings) {
+/**
+ * 
+ * @param {import("react").Element} Component 
+ * @param {string} componentName 
+ * @param {import("angular").IModule} angularApp 
+ * @param {Record<string, string>} [bindings] 
+ */
+export function angularize(Component, componentName, angularApp, bindings) {
   bindings = bindings || {};
   if (typeof window === "undefined" || typeof angularApp === "undefined")
     return;
@@ -61,7 +67,14 @@ function angularize(Component, componentName, angularApp, bindings) {
   });
 }
 
-function angularizeDirective(Component, directiveName, angularApp, bindings) {
+/**
+ * 
+ * @param {import("react").Element} Component 
+ * @param {string} directiveName 
+ * @param {import("angular").IModule} angularApp 
+ * @param {Record<string, string>} [bindings] 
+ */
+export function angularizeDirective(Component, directiveName, angularApp, bindings) {
   bindings = bindings || {};
   if (typeof window === "undefined" || typeof angularApp === "undefined")
     return;
@@ -103,7 +116,12 @@ function angularizeDirective(Component, directiveName, angularApp, bindings) {
   });
 }
 
-function getService(serviceName) {
+/**
+ * @template T
+ * @param {string} serviceName 
+ * @returns {T|Record<never, never>}
+ */
+export function getService(serviceName) {
   if (typeof window === "undefined" || typeof window.angular === "undefined")
     return {};
   return window.angular.element(document.body).injector().get(serviceName);
@@ -116,9 +134,3 @@ function equals(o1, o2) {
   }
   return window.angular.equals(o1, o2);
 }
-
-module.exports = {
-  getService,
-  angularize,
-  angularizeDirective,
-};
